@@ -95,6 +95,7 @@ if args["TARGET_ENV"] == "hardware":
     # The executable depends on the linkerscript
     env.Depends(target=program, dependency=env["LINKERSCRIPT_FILE"])
 
+    print("DEBUG:: ", program)
     # Add target environment-specific SCons aliases
     # WARNING: all aliases must be checked during argument validation
     env.Alias("build", program)
