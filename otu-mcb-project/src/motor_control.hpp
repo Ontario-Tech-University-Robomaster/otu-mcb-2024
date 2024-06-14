@@ -82,13 +82,24 @@ void set_motor_speeds(const Remote &remote)
     br_motor.setDesiredOutput(c4);
 
     // This is all for shooting the turret
-    if (remote.getMouseL())
+    // if (remote.getMouseL() || remote.getSwitch())
+    // {
+        // agitator_motor.setDesiredOutput(MAX_INT16);
+    // }
+    // if (remote.getMouseR())
+    // {
+        // left_turret_motor.setDesiredOutput(MAX_INT16);
+        // right_turret_motor.setDesiredOutput(MAX_INT16);
+    // }
+    left_turret_motor.setDesiredOutput(MAX_INT16);
+    right_turret_motor.setDesiredOutput(-MAX_INT16);
+    if (remote.getSwitch(Remote::Switch::LEFT_SWITCH) == Remote::SwitchState::UP)
     {
         agitator_motor.setDesiredOutput(MAX_INT16);
     }
-    if (remote.getMouseR())
-    {
-        left_turret_motor.setDesiredOutput(MAX_INT16);
-        right_turret_motor.setDesiredOutput(MAX_INT16);
-    }
+    // if (remote.getMouseR())
+    // {
+    //     left_turret_motor.setDesiredOutput(MAX_INT16);
+    //     right_turret_motor.setDesiredOutput(MAX_INT16);
+    // }
 }
