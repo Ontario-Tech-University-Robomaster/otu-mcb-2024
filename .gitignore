@@ -1,6 +1,7 @@
 *.pyc
 
-otu-mcb-project/build
+/otu-mcb-project/build
+!/otu-mcb-project/build/hardware/scons-release/otu-mcb-project.elf 
 otu-mcb-project/Pipfile.lock
 project.xml.log
 
