@@ -47,10 +47,10 @@ void set_motor_speeds(const Remote &remote)
     int16_t chassis_y = turret_y;
 
     // TODO: add rotation factor to make the robot rotate
-    int fl = (chassis_y + chassis_x);
-    int bl = (chassis_y - chassis_x);
-    int fr = -(chassis_y + chassis_x);
-    int br = -(chassis_y - chassis_x);
+    int fl = -(chassis_y + chassis_x);
+    int bl = -(chassis_y - chassis_x);
+    int fr = (chassis_y + chassis_x);
+    int br = (chassis_y - chassis_x);
 
     // TODO: subtract the rotation factor to make the  turret counter rotate
     // pan_motor.setDesiredOutput(turret_pan);
@@ -63,8 +63,8 @@ void set_motor_speeds(const Remote &remote)
 
     if (remote.getSwitch(Remote::Switch::RIGHT_SWITCH) == Remote::SwitchState::UP)
     {
-        left_turret_motor.setDesiredOutput(MAX_INT16 * 0.9);
-        right_turret_motor.setDesiredOutput(MAX_INT16 * 0.9);
+        left_turret_motor.setDesiredOutput(MAX_INT16 * 0.95);
+        right_turret_motor.setDesiredOutput(MAX_INT16 * 0.95);
         agitator_motor.setDesiredOutput(MAX_SPEED);
     }
     else if (remote.getSwitch(Remote::Switch::RIGHT_SWITCH) == Remote::SwitchState::MID)
