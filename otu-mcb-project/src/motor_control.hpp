@@ -22,9 +22,6 @@ float deg_to_rad(float deg) { return (deg * 3.14159262) / 180; }
 
 int16_t map(int16_t in, int16_t min1, int16_t max1, int16_t min2, int16_t max2)
 {
-    // int m = (max2 - min2) / (max1 - min1);
-    // int b = max1 - m * min1;
-    // return m * in + b;
     return (max2 - min2) / (max1 - min1) * (in - min1) + max1;
 }
 
@@ -33,16 +30,16 @@ bool shooter_started = false;
 void set_motor_speeds(const Remote &remote)
 {
     // kill switch because the robot hates us
-    if (remote.getSwitch(Remote::Switch::RIGHT_SWITCH) == Remote::SwitchState::DOWN)
-    {
-        fl_motor.setDesiredOutput(0);
-        bl_motor.setDesiredOutput(0);
-        fr_motor.setDesiredOutput(0);
-        bl_motor.setDesiredOutput(0);
-        pan_motor.setDesiredOutput(0);
-        tilt_motor.setDesiredOutput(0);
-        return;
-    }
+    // if (remote.getSwitch(Remote::Switch::RIGHT_SWITCH) == Remote::SwitchState::DOWN)
+    // {
+    // fl_motor.setDesiredOutput(0);
+    // bl_motor.setDesiredOutput(0);
+    // fr_motor.setDesiredOutput(0);
+    // bl_motor.setDesiredOutput(0);
+    // pan_motor.setDesiredOutput(0);
+    // tilt_motor.setDesiredOutput(0);
+    // return;
+    // }
 
     /*
      * 1  4 +
@@ -78,12 +75,8 @@ void set_motor_speeds(const Remote &remote)
     fr_motor.setDesiredOutput(fr);
     br_motor.setDesiredOutput(br);
 
-    if (!shooter_started)
-    {
-        left_turret_motor.setDesiredOutput(MAX_INT16);
-        right_turret_motor.setTargetPwm(1);
-        // right_turret_motor.setDesiredOutput(-MAX_INT16);
-    }
+    left_turret_motor.setDesiredOutput(MAX_INT16);
+    right_turret_motor.setDesiredOutput(-MAX_INT16);
     if (remote.getSwitch(Remote::Switch::RIGHT_SWITCH) == Remote::SwitchState::UP)
     {
         agitator_motor.setDesiredOutput(MAX_SPEED);
