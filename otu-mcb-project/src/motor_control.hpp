@@ -1,3 +1,6 @@
+#ifndef MOTOR_CONTROL_HPP
+#define MOTOR_CONTROL_HPP
+
 #include <math.h>
 
 #include <cstdint>
@@ -25,6 +28,8 @@ int16_t map(int16_t in, int16_t min1, int16_t max1, int16_t min2, int16_t max2)
     return (max2 - min2) / (max1 - min1) * (in - min1) + max1;
 }
 
+bool shooter_started = false;
+
 void set_motor_speeds(const Remote &remote)
 {
     /*
@@ -33,9 +38,8 @@ void set_motor_speeds(const Remote &remote)
      * X  +
      */
     // This is for the mouse movement of the turret
-    int mouse_y = remote.getMouseX(),
-        mouse_x = remote.getMouseY();
-    
+    int mouse_y = remote.getMouseX(), mouse_x = remote.getMouseY();
+
     float chassis_angle =
         deg_to_rad(tap::motor::DjiMotor::encoderToDegrees(pan_motor.getEncoderUnwrapped()));
 
@@ -55,24 +59,30 @@ void set_motor_speeds(const Remote &remote)
     int16_t chassis_y = turret_x * std::sin(chassis_angle) + turret_y * std::cos(chassis_angle);
 
     // TODO: add rotation factor to make the robot rotate
-    int c1 = (chassis_y + chassis_x);
-    int c2 = (chassis_y - chassis_x);
-    int c3 = -(chassis_y + chassis_x);
-    int c4 = -(chassis_y - chassis_x);
+    int fl = (chassis_y + chassis_x);
+    int bl = (chassis_y - chassis_x);
+    int fr = -(chassis_y + chassis_x);
+    int br = -(chassis_y - chassis_x);
 
     // TODO: subtract the rotation factor to make the  turret counter rotate
     pan_motor.setDesiredOutput(turret_pan);
 
     tilt_motor.setDesiredOutput(turret_tilt);
-    fl_motor.setDesiredOutput(c1);
-    bl_motor.setDesiredOutput(c2);
-    fr_motor.setDesiredOutput(c3);
-    br_motor.setDesiredOutput(c4);
+    fl_motor.setDesiredOutput(fl);
+    bl_motor.setDesiredOutput(bl);
+    fr_motor.setDesiredOutput(fr);
+    br_motor.setDesiredOutput(br);
 
-    left_turret_motor.setDesiredOutput(MAX_SPEED);
-    right_turret_motor.setDesiredOutput(-MAX_SPEED);
+    if (!shooter_started)
+    {
+        left_turret_motor.setDesiredOutput(MAX_INT16);
+        right_turret_motor.setTargetPwm(1);
+        // right_turret_motor.setDesiredOutput(-MAX_INT16);
+    }
     if (remote.getSwitch(Remote::Switch::RIGHT_SWITCH) == Remote::SwitchState::UP)
     {
         agitator_motor.setDesiredOutput(MAX_SPEED);
     }
 }
+
+#endif
