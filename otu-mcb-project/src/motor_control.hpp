@@ -27,18 +27,6 @@ int16_t map(int16_t in, int16_t min1, int16_t max1, int16_t min2, int16_t max2)
 
 void set_motor_speeds(const Remote &remote)
 {
-    // kill switch because the robot hates us
-    // if (remote.getSwitch(Remote::Switch::RIGHT_SWITCH) == Remote::SwitchState::DOWN)
-    // {
-    // fl_motor.setDesiredOutput(0);
-    // bl_motor.setDesiredOutput(0);
-    // fr_motor.setDesiredOutput(0);
-    // bl_motor.setDesiredOutput(0);
-    // pan_motor.setDesiredOutput(0);
-    // tilt_motor.setDesiredOutput(0);
-    // return;
-    // }
-
     /*
      * 1  4 +
      * 2  3 Y
@@ -75,8 +63,8 @@ void set_motor_speeds(const Remote &remote)
 
     if (remote.getSwitch(Remote::Switch::RIGHT_SWITCH) == Remote::SwitchState::UP)
     {
-        left_turret_motor.setDesiredOutput(MAX_INT16);
-        right_turret_motor.setDesiredOutput(MAX_INT16);
+        left_turret_motor.setDesiredOutput(MAX_INT16 * 0.9);
+        right_turret_motor.setDesiredOutput(MAX_INT16 * 0.9);
         agitator_motor.setDesiredOutput(MAX_SPEED);
     }
     else if (remote.getSwitch(Remote::Switch::RIGHT_SWITCH) == Remote::SwitchState::MID)

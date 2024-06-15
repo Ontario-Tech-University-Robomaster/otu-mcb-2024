@@ -21,7 +21,7 @@ static constexpr tap::motor::MotorId agitator_MOTOR_ID = tap::motor::MOTOR7;
 // static constexpr tap::gpio::Pwm::Pin agitator_pwm_pin = tap::gpio::Pwm::Pin::Z;
 
 static constexpr tap::can::CanBus CAN_BUS = tap::can::CanBus::CAN_BUS1;
-static constexpr tap::can::CanBus CAN_BUS2 = tap::can::CanBus::CAN_BUS2;
+// static constexpr tap::can::CanBus CAN_BUS2 = tap::can::CanBus::CAN_BUS2;
 
 tap::motor::DjiMotor fl_motor(src::DoNotUse_getDrivers(), FRONT_LEFT_MOTOR_ID, CAN_BUS, false, "front left");
 tap::motor::DjiMotor bl_motor(src::DoNotUse_getDrivers(), BACK_LEFT_MOTOR_ID, CAN_BUS, false, "back left");
