@@ -62,14 +62,14 @@ void set_motor_speeds(const Remote &remote)
     int c4 = -(chassis_y - chassis_x);
 
     // lock the rotation of the chassis and turret
-    if (remote.getSwitch(Remote::Switch::RIGHT_SWITCH) == Remote::SwitchState::UP)
-    {
-        c1 += turret_pan;
-        c2 += turret_pan;
-        c3 += turret_pan;
-        c4 += turret_pan;
-    }
-    else
+    // if (remote.getSwitch(Remote::Switch::RIGHT_SWITCH) == Remote::SwitchState::UP)
+    // {
+    //     c1 += turret_pan;
+    //     c2 += turret_pan;
+    //     c3 += turret_pan;
+    //     c4 += turret_pan;
+    // }
+    // else
     {
         // TODO: subtract the rotation factor to make the  turret counter rotate
         pan_motor.setDesiredOutput(turret_pan);
