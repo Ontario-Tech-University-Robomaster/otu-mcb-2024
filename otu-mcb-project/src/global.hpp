@@ -30,9 +30,9 @@ tap::motor::DjiMotor fr_motor(src::DoNotUse_getDrivers(), FRONT_RIGHT_MOTOR_ID, 
 // tap::motor::DjiMotor pan_motor(src::DoNotUse_getDrivers(), PAN_MOTOR_ID, CAN_BUS, false, "pan");
 // tap::motor::DjiMotor tilt_motor(src::DoNotUse_getDrivers(), TILT_MOTOR_ID, CAN_BUS, false, "tilt");
 
-tap::motor::DjiMotor left_turret_motor(src::DoNotUse_getDrivers(), left_turret_MOTOR_ID, CAN_BUS2, false, "left shooter");
-tap::motor::DjiMotor right_turret_motor(src::DoNotUse_getDrivers(), right_turret_MOTOR_ID, CAN_BUS2, false, "right shooter");
-tap::motor::DjiMotor agitator_motor(src::DoNotUse_getDrivers(), agitator_MOTOR_ID, CAN_BUS2, false, "agitator");
+tap::motor::DjiMotor left_turret_motor(src::DoNotUse_getDrivers(), left_turret_MOTOR_ID, CAN_BUS, false, "left shooter");
+tap::motor::DjiMotor right_turret_motor(src::DoNotUse_getDrivers(), right_turret_MOTOR_ID, CAN_BUS, false, "right shooter");
+tap::motor::DjiMotor agitator_motor(src::DoNotUse_getDrivers(), agitator_MOTOR_ID, CAN_BUS, false, "agitator");
 
 // tap::motor::Servo right_turret_motor(src::DoNotUse_getDrivers(), right_turret_pwm_pin, 1, 0, 5);
 
