@@ -68,6 +68,8 @@ void set_motor_speeds(const Remote &remote)
         agitator_motor.setDesiredOutput(MAX_INT16 * 0.3);
     }
     else if (remote.getSwitch(Remote::Switch::RIGHT_SWITCH) == Remote::SwitchState::DOWN) {
+        left_turret_motor.setDesiredOutput(-MAX_INT16 * 0.5);
+        right_turret_motor.setDesiredOutput(-MAX_INT16 * 0.5);
         agitator_motor.setDesiredOutput(-MAX_DRIVE_SPEED);
     }
     else if (remote.getSwitch(Remote::Switch::RIGHT_SWITCH) == Remote::SwitchState::MID)
