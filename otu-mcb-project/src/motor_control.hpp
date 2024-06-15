@@ -55,8 +55,10 @@ void set_motor_speeds(const Remote &remote)
     int16_t turret_y =
         -map(remote.getChannel(Remote::Channel::LEFT_VERTICAL), -1, 1, MIN_SPEED, MAX_SPEED);
 
-    int16_t chassis_x = turret_x * std::cos(chassis_angle) - turret_y * std::sin(chassis_angle);
-    int16_t chassis_y = turret_x * std::sin(chassis_angle) + turret_y * std::cos(chassis_angle);
+    // int16_t chassis_x = turret_x * std::cos(chassis_angle) - turret_y * std::sin(chassis_angle);
+    // int16_t chassis_y = turret_x * std::sin(chassis_angle) + turret_y * std::cos(chassis_angle);
+    int16_t chassis_x = turret_x;
+    int16_t chassis_y = turret_y;
 
     // TODO: add rotation factor to make the robot rotate
     int fl = (chassis_y + chassis_x);
