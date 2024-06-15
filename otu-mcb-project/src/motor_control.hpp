@@ -47,18 +47,18 @@ void set_motor_speeds(const Remote &remote)
      * X  +
      */
 
-    float chassis_angle =
-        deg_to_rad(tap::motor::DjiMotor::encoderToDegrees(pan_motor.getEncoderUnwrapped()));
+    // float chassis_angle =
+        // deg_to_rad(tap::motor::DjiMotor::encoderToDegrees(pan_motor.getEncoderUnwrapped()));
 
     int16_t turret_pan = remote.getChannel(Remote::Channel::RIGHT_HORIZONTAL) * MAX_SPEED;
     int16_t turret_tilt = remote.getChannel(Remote::Channel::RIGHT_VERTICAL) * MAX_SPEED;
     int16_t turret_x = remote.getChannel(Remote::Channel::LEFT_HORIZONTAL) * MAX_SPEED;
     int16_t turret_y = -remote.getChannel(Remote::Channel::LEFT_VERTICAL) * MAX_SPEED;
 
-    int16_t chassis_x = turret_x * std::cos(chassis_angle) - turret_y * std::sin(chassis_angle);
-    int16_t chassis_y = turret_x * std::sin(chassis_angle) + turret_y * std::cos(chassis_angle);
-    // int16_t chassis_x = turret_x;
-    // int16_t chassis_y = turret_y;
+    // int16_t chassis_x = turret_x * std::cos(chassis_angle) - turret_y * std::sin(chassis_angle);
+    // int16_t chassis_y = turret_x * std::sin(chassis_angle) + turret_y * std::cos(chassis_angle);
+    int16_t chassis_x = turret_x;
+    int16_t chassis_y = turret_y;
 
     // TODO: add rotation factor to make the robot rotate
     int fl = (chassis_y + chassis_x);
@@ -67,7 +67,7 @@ void set_motor_speeds(const Remote &remote)
     int br = -(chassis_y - chassis_x);
 
     // TODO: subtract the rotation factor to make the  turret counter rotate
-    pan_motor.setDesiredOutput(turret_pan);
+    // pan_motor.setDesiredOutput(turret_pan);
 
     tilt_motor.setDesiredOutput(turret_tilt);
     fl_motor.setDesiredOutput(fl);
