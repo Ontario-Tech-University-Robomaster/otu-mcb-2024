@@ -128,6 +128,7 @@ static void initializeIo(src::Drivers *drivers)
     // tilt_motor.initialize();
     agitator_motor.initialize();
     left_turret_motor.initialize();
+    right_turret_motor.initialize();
 
     fl_motor.setDesiredOutput(0);
     bl_motor.setDesiredOutput(0);
@@ -137,6 +138,7 @@ static void initializeIo(src::Drivers *drivers)
     // tilt_motor.setDesiredOutput(0);
     agitator_motor.setDesiredOutput(0);
     left_turret_motor.setDesiredOutput(0);
+    right_turret_motor.setDesiredOutput(0);
 
 }
 

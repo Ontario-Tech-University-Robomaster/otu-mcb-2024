@@ -46,7 +46,7 @@ void set_motor_speeds(const Remote &remote)
      */
 
     // float chassis_angle =
-        // deg_to_rad(tap::motor::DjiMotor::encoderToDegrees(pan_motor.getEncoderUnwrapped()));
+    // deg_to_rad(tap::motor::DjiMotor::encoderToDegrees(pan_motor.getEncoderUnwrapped()));
 
     int16_t turret_pan = remote.getChannel(Remote::Channel::RIGHT_HORIZONTAL) * MAX_SPEED;
     int16_t turret_tilt = remote.getChannel(Remote::Channel::RIGHT_VERTICAL) * MAX_SPEED;
@@ -78,7 +78,9 @@ void set_motor_speeds(const Remote &remote)
         left_turret_motor.setDesiredOutput(MAX_INT16);
         right_turret_motor.setDesiredOutput(MAX_INT16);
         agitator_motor.setDesiredOutput(MAX_SPEED);
-    } else if (remote.getSwitch(Remote::Switch::RIGHT_SWITCH) == Remote::SwitchState::MID) {
+    }
+    else if (remote.getSwitch(Remote::Switch::RIGHT_SWITCH) == Remote::SwitchState::MID)
+    {
         left_turret_motor.setDesiredOutput(0);
         right_turret_motor.setDesiredOutput(0);
         agitator_motor.setDesiredOutput(0);
