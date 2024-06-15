@@ -10,11 +10,11 @@
 
 #include "global.hpp"
 
-#define SCALE 0.3
+#define SCALE 0.3 * 0.75
 
 #define MAX_INT16 32676
-#define MAX_SPEED ((int)(MAX_INT16 * SCALE))
-#define MIN_SPEED -((int)(MAX_INT16 * SCALE))
+#define MAX_DRIVE_SPEED ((int)(MAX_INT16 * SCALE))
+#define MIN_DRIVE_SPEED -((int)(MAX_INT16 * SCALE))
 
 using namespace tap::communication::serial;
 
@@ -36,10 +36,10 @@ void set_motor_speeds(const Remote &remote)
     // float chassis_angle =
     // deg_to_rad(tap::motor::DjiMotor::encoderToDegrees(pan_motor.getEncoderUnwrapped()));
 
-    int16_t turret_pan = remote.getChannel(Remote::Channel::RIGHT_HORIZONTAL) * MAX_SPEED;
-    int16_t turret_tilt = remote.getChannel(Remote::Channel::RIGHT_VERTICAL) * MAX_SPEED;
-    int16_t turret_x = remote.getChannel(Remote::Channel::LEFT_HORIZONTAL) * MAX_SPEED;
-    int16_t turret_y = -remote.getChannel(Remote::Channel::LEFT_VERTICAL) * MAX_SPEED;
+    int16_t turret_pan = remote.getChannel(Remote::Channel::RIGHT_HORIZONTAL) * MAX_DRIVE_SPEED;
+    int16_t turret_tilt = remote.getChannel(Remote::Channel::RIGHT_VERTICAL) * MAX_DRIVE_SPEED;
+    int16_t turret_x = remote.getChannel(Remote::Channel::LEFT_HORIZONTAL) * MAX_DRIVE_SPEED;
+    int16_t turret_y = -remote.getChannel(Remote::Channel::LEFT_VERTICAL) * MAX_DRIVE_SPEED;
 
     // int16_t chassis_x = turret_x * std::cos(chassis_angle) - turret_y * std::sin(chassis_angle);
     // int16_t chassis_y = turret_x * std::sin(chassis_angle) + turret_y * std::cos(chassis_angle);
@@ -65,10 +65,10 @@ void set_motor_speeds(const Remote &remote)
     {
         left_turret_motor.setDesiredOutput(MAX_INT16 * 0.95);
         right_turret_motor.setDesiredOutput(MAX_INT16 * 0.95);
-        agitator_motor.setDesiredOutput(MAX_SPEED);
+        agitator_motor.setDesiredOutput(MAX_INT16 * 0.3);
     }
     else if (remote.getSwitch(Remote::Switch::RIGHT_SWITCH) == Remote::SwitchState::DOWN) {
-        agitator_motor.setDesiredOutput(-MAX_SPEED);
+        agitator_motor.setDesiredOutput(-MAX_DRIVE_SPEED);
     }
     else if (remote.getSwitch(Remote::Switch::RIGHT_SWITCH) == Remote::SwitchState::MID)
     {
