@@ -126,6 +126,10 @@ static void initializeIo(src::Drivers *drivers)
     fr_motor.initialize();
     pan_motor.initialize();
     tilt_motor.initialize();
+    agitator_motor.initialize();
+    left_turret_motor.initialize();
+
+    fl_motor.setDesiredOutput(0);
     // agitator_motor.initialize();
     // left_turret_motor.initialize();
     // right_turret_motor.initialize();
