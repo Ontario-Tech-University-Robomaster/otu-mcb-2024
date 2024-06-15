@@ -25,8 +25,6 @@ int16_t map(int16_t in, int16_t min1, int16_t max1, int16_t min2, int16_t max2)
     return (max2 - min2) / (max1 - min1) * (in - min1) + max1;
 }
 
-bool shooter_started = false;
-
 void set_motor_speeds(const Remote &remote)
 {
     // kill switch because the robot hates us
@@ -69,16 +67,16 @@ void set_motor_speeds(const Remote &remote)
     // TODO: subtract the rotation factor to make the  turret counter rotate
     // pan_motor.setDesiredOutput(turret_pan);
 
-    tilt_motor.setDesiredOutput(turret_tilt);
+    // tilt_motor.setDesiredOutput(turret_tilt);
     fl_motor.setDesiredOutput(fl);
     bl_motor.setDesiredOutput(bl);
     fr_motor.setDesiredOutput(fr);
     br_motor.setDesiredOutput(br);
 
-    left_turret_motor.setDesiredOutput(MAX_INT16);
-    right_turret_motor.setDesiredOutput(-MAX_INT16);
     if (remote.getSwitch(Remote::Switch::RIGHT_SWITCH) == Remote::SwitchState::UP)
     {
+        left_turret_motor.setDesiredOutput(MAX_INT16);
+        right_turret_motor.setDesiredOutput(MAX_INT16);
         agitator_motor.setDesiredOutput(MAX_SPEED);
     }
 }
