@@ -32,33 +32,36 @@ bool shooter_started = false;
 
 void set_motor_speeds(const Remote &remote)
 {
+    // kill switch because the robot hates us
+    if (remote.getSwitch(Remote::Switch::RIGHT_SWITCH) == Remote::SwitchState::DOWN)
+    {
+        fl_motor.setDesiredOutput(0);
+        bl_motor.setDesiredOutput(0);
+        fr_motor.setDesiredOutput(0);
+        bl_motor.setDesiredOutput(0);
+        pan_motor.setDesiredOutput(0);
+        tilt_motor.setDesiredOutput(0);
+        return;
+    }
+
     /*
      * 1  4 +
      * 2  3 Y
      * X  +
      */
-    // This is for the mouse movement of the turret
-    int mouse_y = remote.getMouseX(), mouse_x = remote.getMouseY();
 
     float chassis_angle =
         deg_to_rad(tap::motor::DjiMotor::encoderToDegrees(pan_motor.getEncoderUnwrapped()));
 
-    int16_t turret_pan =
-        map(remote.getChannel(Remote::Channel::RIGHT_HORIZONTAL), -1, 1, MIN_SPEED, MAX_SPEED);
+    int16_t turret_pan = remote.getChannel(Remote::Channel::RIGHT_HORIZONTAL) * MAX_SPEED;
+    int16_t turret_tilt = remote.getChannel(Remote::Channel::RIGHT_VERTICAL) * MAX_SPEED;
+    int16_t turret_x = remote.getChannel(Remote::Channel::LEFT_HORIZONTAL) * MAX_SPEED;
+    int16_t turret_y = -remote.getChannel(Remote::Channel::LEFT_VERTICAL) * MAX_SPEED;
 
-    int16_t turret_tilt =
-        map(remote.getChannel(Remote::Channel::RIGHT_VERTICAL), -1, 1, MIN_SPEED, MAX_SPEED);
-
-    int16_t turret_x =
-        map(remote.getChannel(Remote::Channel::LEFT_HORIZONTAL), -1, 1, MIN_SPEED, MAX_SPEED);
-
-    int16_t turret_y =
-        -map(remote.getChannel(Remote::Channel::LEFT_VERTICAL), -1, 1, MIN_SPEED, MAX_SPEED);
-
-    // int16_t chassis_x = turret_x * std::cos(chassis_angle) - turret_y * std::sin(chassis_angle);
-    // int16_t chassis_y = turret_x * std::sin(chassis_angle) + turret_y * std::cos(chassis_angle);
-    int16_t chassis_x = turret_x;
-    int16_t chassis_y = turret_y;
+    int16_t chassis_x = turret_x * std::cos(chassis_angle) - turret_y * std::sin(chassis_angle);
+    int16_t chassis_y = turret_x * std::sin(chassis_angle) + turret_y * std::cos(chassis_angle);
+    // int16_t chassis_x = turret_x;
+    // int16_t chassis_y = turret_y;
 
     // TODO: add rotation factor to make the robot rotate
     int fl = (chassis_y + chassis_x);
