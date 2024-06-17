@@ -47,12 +47,11 @@
 // board
 #include "tap/board/board.hpp"
 
-// include for PID 
+// include for PID
 #include "tap/algorithms/smooth_pid.hpp"
 
 // include for motor control
 #include "motor_control.hpp"
-
 
 // Place any sort of input/output initialization here. For example, place
 // serial init stuff here.
@@ -79,7 +78,6 @@ int main()
     Board::initialize();
     initializeIo(drivers);
 
-
 #ifdef PLATFORM_HOSTED
     tap::motorsim::SimHandler::resetMotorSims();
     // Blocking call, waits until Windows Simulator connects.
@@ -105,7 +103,6 @@ int main()
         drivers->remote.read();
         drivers->canRxHandler.pollCanData();
         modm::delay_us(10);
-        
     }
     return 0;
 }
@@ -139,7 +136,6 @@ static void initializeIo(src::Drivers *drivers)
     agitator_motor.setDesiredOutput(0);
     left_turret_motor.setDesiredOutput(0);
     right_turret_motor.setDesiredOutput(0);
-
 }
 
 static void updateIo(src::Drivers *drivers)
