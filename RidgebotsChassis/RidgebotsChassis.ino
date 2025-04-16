@@ -4,39 +4,41 @@
 #include "motor_info.h"
 #include "CanConf.h"
 #include "dr16.h"
-// #include <PID_v1_bc.h>
 
 using namespace std;
+// Declare motor objects
 motor motor1(M3508, 0);
 motor motor2(M3508, 1);
 motor motor3(M3508, 2);
 motor motor4(M3508, 3);
 
+// Declare PID Objects (Crazy values from tunning with MATLAB)
 // PID m1(39.36, 1226.72, 0);
 // PID m1(3.936, 122.672, 0);
 // PID m1(76, 6400, 0.02);
 // PID m1(9, 50, 0.005);
+
+// Declare PID Objects (Hand Tuned Values)
 PID m1(1, 0, 10);
 PID m2(1, 0, 10);
 PID m3(1, 0, 10);
 PID m4(1, 0, 10);
 
-
 CAN_message_t turret = {
-  .id = 0x1FE,  // can identifier
-  .len = 8,     // length of data
-  .buf = { 0 }  // data
+  .id = 0x1FE,  // CAN identifier
+  .len = 8,     // Length of data
+  .buf = { 0 }  // Data to be sent via CAN
 };
 
 CAN_message_t motor_msg{
-  .id = 0x204  // can identifier
+  .id = 0x204  // CAN identifier
 };
 
 CAN_message_t motor_feedback;
 
 bool dataValid = false;
 
-//oridigl is PD_0 and PD_1
+// Originall is PD_0 and PD_1
 STM32_CAN Can1(PD_0, PD_1);  //by PinName. Finds matching peripheral automatically
 
 //                          RX   TX
@@ -71,15 +73,15 @@ CAN_message_t setDrivetrain(struct motor_data motorValues) {
       motorValues.m3,
       motorValues.m4 >> 8,
       motorValues.m4,
-    }  // data
+    }  // Data to be sent via CAN
   };
   return drivetrain;
 }
 
 CAN_message_t setTurret(struct motor_data motorValues) {
   CAN_message_t drivetrain = {
-    .id = 0x1FE,  // can identifier
-    .len = 8,     // length of data
+    .id = 0x1FE,  // CAN identifier
+    .len = 8,     // Length of data
     .buf = {
       motorValues.m1 >> 8,
       motorValues.m1,
@@ -89,7 +91,7 @@ CAN_message_t setTurret(struct motor_data motorValues) {
       motorValues.m3,
       motorValues.m4 >> 8,
       motorValues.m4,
-    }  // data
+    }  // Data
   };
   return drivetrain;
 }
@@ -97,21 +99,15 @@ CAN_message_t setTurret(struct motor_data motorValues) {
 double input = 0;
 double output = 0;
 double setpoint = 1000.0;  // Define setpoint
-// PID myPID(&input, &output, &setpoint, 1, 5, 70, 1);
-// PID myPID(&input, &output, &setpoint, 0, 0, 0, 0);
 
 void setup() {
-  // myPID.SetMode(P_ON_M);
-  // myPID.SetOutputLimits(-1000, 1000);
-
-  SerialInput.begin(100000, SERIAL_8E1);  //100Kbps
-
-  Can1.setBaudRate(1000000);  //1M
+  SerialInput.begin(100000, SERIAL_8E1);  // 100Kbps
+  Can1.setBaudRate(1000000);              // 1Mbps
   Can1.begin(false);
 
   pinMode(PE11, OUTPUT);  //LED R
   pinMode(PF14, OUTPUT);  //LED G
-  Serial.begin(115200);
+  Serial.begin(115200);   // Serial for debugging
 }
 
 uint16_t prev_sp1 = 0;

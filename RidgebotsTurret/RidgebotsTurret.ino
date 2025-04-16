@@ -11,15 +11,14 @@ STM32_CAN Can1(PD_0, PD_1);  //by PinName. Finds matching peripheral automatical
 
 bool dr16Recieved = false;
 
-void setup() {                            //serial_8E1
-
-  Can1.begin(false);
-  Can1.setBaudRate(1000000);  //1M
-
-  pinMode(PE11, OUTPUT);  //LED R
-  pinMode(PF14, OUTPUT);  //LED G
-  Serial.begin(9600);
+void setup() {               //serial_8E1
+  Can1.begin(false);         // Begin CAN 1 protocol
+  Can1.setBaudRate(1000000); // Set baudrate of  CAN 1 to 1Mbps
+  pinMode(PE11, OUTPUT);     // LED R
+  pinMode(PF14, OUTPUT);     // LED G
+  Serial.begin(9600);        // Start serial monitor for debugging with 9600 baudrate
 }
+
 
 void setCan(CAN_message_t& CAN, int decimal) {
   uint16_t canValue(decimal), canInvValue(-decimal);
@@ -42,19 +41,17 @@ void setCan(CAN_message_t& CAN, int decimal) {
 bool pp = true;
 
 void loop() {
-
   CAN_message_t CAN_shooter = {
-    .id = 0x200,  // can identifier
-    .len = 8,     // length of data
+    .id = 0x200,  // CAN identifier
+    .len = 8,     // Length of data
     .buf = {
       0xC1, 0x80,
       0x3E, 0x80,
       0x23, 0x28,
-      0x23, 0x28 }  // data
+      0x23, 0x28 }  // Data being sent
   };
 
-  Can1.write(CAN_shooter);
-
+  Can1.write(CAN_shooter); // Send the CAN message 
   delay(100);
 
   if (1) {
